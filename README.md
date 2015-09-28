@@ -17,11 +17,11 @@ Optional: The server defaults to running on port 8080. If you're already running
 ```
 java -jar -Dserver.port=8081 restful-harmony-0.X.Y.jar <harmony hub ip> <harmony user name> <harmony password>
 ```
-### '<harmony hub ip>'
+### `<harmony hub ip>`
 Required: This is the IP address of your harmony hub.
-### '<harmony user name>'
+### `<harmony user name>`
 Required: This is your username that you registered at MyHarmony.com.
-### '<harmony password>'
+### `<harmony password>`
 Required: This is your password that you registered at MyHarmony.com.
 ## Api usage
 This application exposes a restful api using the constructs for GET/PUT/POST. The following are the commands in the api that are available. The api address is: http://<ip address>:<port>/harmony and the context we will use below for examples is http://host:8080/harmony.
