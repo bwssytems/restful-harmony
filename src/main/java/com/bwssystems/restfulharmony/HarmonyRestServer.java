@@ -15,7 +15,6 @@ import com.google.inject.Injector;
 import net.whistlingfish.harmony.ActivityChangeListener;
 import net.whistlingfish.harmony.HarmonyClient;
 import net.whistlingfish.harmony.HarmonyClientModule;
-import net.whistlingfish.harmony.Main;
 import net.whistlingfish.harmony.config.Activity;
 
 public class HarmonyRestServer {
@@ -42,6 +41,8 @@ public class HarmonyRestServer {
         harmonyClient.connect(args[0], args[1], args[2]);
         port(Integer.valueOf(System.getProperty("server.port", "8080")));
         harmonyApi = new HarmonyRest(harmonyClient);
+        harmonyApi.setupServer();
+        log.info("Harmony rest server running....");
         while(true)
         {
         	//no op

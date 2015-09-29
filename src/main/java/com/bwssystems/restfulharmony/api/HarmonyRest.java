@@ -24,11 +24,10 @@ public class HarmonyRest {
     public HarmonyRest(HarmonyClient theClient) {
 		super();
 		harmonyClient = theClient;
-		this.setupEndpoints();
 	}
 
     //	This function sets up the sparkjava rest calls for the harmony api
-    private void setupEndpoints() {
+    public void setupServer() {
     	log.info("Harmony rest service started....");
     	// http://ip_address:port/harmony/list/activities
 	    get(HARMONY_REST_CONTEXT + "/list/activities", "application/json", (request, response) -> {
