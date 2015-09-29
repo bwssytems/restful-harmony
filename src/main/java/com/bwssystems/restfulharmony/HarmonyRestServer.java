@@ -35,7 +35,7 @@ public class HarmonyRestServer {
         harmonyClient.addListener(new ActivityChangeListener() {
             @Override
             public void activityStarted(Activity activity) {
-                System.out.println(format("activity changed: [%d] %s", activity.getId(), activity.getLabel()));
+                log.info(format("activity changed: [%d] %s", activity.getId(), activity.getLabel()));
             }
         });
         harmonyClient.connect(args[0], args[1], args[2]);

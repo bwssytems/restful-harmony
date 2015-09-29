@@ -10,7 +10,18 @@
 	</properties>
 	<name>Harmony Hub restful server</name>
 	<description>This server application will expose a REST API to be able to execute Harmony Hub commands. This will be useful for integration with Home Automation systems that do not support the Harmony Hub directly.</description>
+	<repositories>
+		<repository>
+	    	<id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 	<dependencies>
+		<dependency>
+		    <groupId>com.github.bwssytems</groupId>
+		    <artifactId>harmony-java-client</artifactId>
+		    <version>1.0.4</version>
+		</dependency>
 		<dependency>
 			<groupId>com.sparkjava</groupId>
 			<artifactId>spark-core</artifactId>
@@ -46,6 +57,11 @@
 			<artifactId>guice</artifactId>
 			<version>4.0-beta4</version>
 		</dependency>
+		<dependency>
+		  <groupId>org.igniterealtime.smack</groupId>
+		  <artifactId>smack-core</artifactId>
+		  <version>4.0.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -70,9 +86,7 @@
 										<exclude>META-INF/*.DSA</exclude>
 										<exclude>META-INF/*.RSA</exclude>
 										<exclude>META-INF/*.txt</exclude>
-										<exclude>META-INF/maven/**</exclude>
-										<exclude>META-INF/services/**</exclude>
-										<exclude>META-INF/DEPENDENCIES</exclude>
+										<exclude>META-INF/*.inf</exclude>
 										<exclude>about_files/**</exclude>
 										<exclude>*.properties</exclude>
 									</excludes>
@@ -88,6 +102,18 @@
 								</filter>
 								<filter>
 									<artifact>commons-logging:commons-logging</artifact>
+									<includes>
+										<include>**</include>
+									</includes>
+								</filter>
+								<filter>
+									<artifact>xpp3:xpp3</artifact>
+									<includes>
+										<include>**</include>
+									</includes>
+								</filter>
+								<filter>
+									<artifact>com.github.bwssytems:harmony-java-client</artifact>
 									<includes>
 										<include>**</include>
 									</includes>
