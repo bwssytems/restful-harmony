@@ -42,10 +42,11 @@ public class HarmonyRestServer {
         port(Integer.valueOf(System.getProperty("server.port", "8080")));
         harmonyApi = new HarmonyRest(harmonyClient);
         harmonyApi.setupServer();
-        log.info("Harmony rest server running....");
+        log.info("Harmony v0.1.1 rest server running....");
         while(true)
         {
         	//no op
+        	Thread.sleep(100000);
         }
     }
 }
