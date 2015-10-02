@@ -20,9 +20,11 @@ public class HarmonyRest {
     private static final Logger log = LoggerFactory.getLogger(HarmonyRest.class);
     private static final String HARMONY_REST_CONTEXT = "/harmony";
     private HarmonyClient harmonyClient;
+    private Boolean noopCalls;
 
-    public HarmonyRest(HarmonyClient theClient) {
+    public HarmonyRest(HarmonyClient theClient, Boolean noopCallsSetting) {
 		super();
+		noopCalls = noopCallsSetting;
 		harmonyClient = theClient;
 	}
 
@@ -68,7 +70,10 @@ public class HarmonyRest {
 	        if(request.body() != null && !request.body().isEmpty()) {
 	        	anActivity = new Gson().fromJson(request.body(), ActivityId.class);
 	            try {
-	                harmonyClient.startActivity(Integer.parseInt(anActivity.getActivityid()));
+	            	if(noopCalls)
+	            		log.info("Noop: start activity call would be: " + anActivity.getActivityid());
+	            	else
+	            		harmonyClient.startActivity(Integer.parseInt(anActivity.getActivityid()));
 	            } catch (IllegalArgumentException e) {
 	            	try {
 	            		harmonyClient.startActivityByName(anActivity.getActivityid());
@@ -77,6 +82,11 @@ public class HarmonyRest {
 	            		status_code = HttpStatus.SC_NOT_FOUND;
 	            	}
 	            }
+	        }
+	        else
+	        {
+	        	status_code = HttpStatus.SC_NOT_FOUND;
+		    	aResponse = "{\"status\": \"null request\"}";
 	        }
 	        
 	        response.status(status_code);
@@ -91,7 +101,10 @@ public class HarmonyRest {
 	        if(request.body() != null && !request.body().isEmpty()) {
 	        	aDeviceButton = new Gson().fromJson(request.body(), DeviceButton.class);
 	            try {
-	                harmonyClient.pressButton(Integer.parseInt(aDeviceButton.getDevice()), aDeviceButton.getButton());
+	            	if(noopCalls)
+	            		log.info("Noop: press call would be device: " + aDeviceButton.getDevice() + " for button: " + aDeviceButton.getButton());
+	            	else
+	            		harmonyClient.pressButton(Integer.parseInt(aDeviceButton.getDevice()), aDeviceButton.getButton());
 	            } catch (IllegalArgumentException e) {
 	            	try {
 	            		harmonyClient.pressButton(aDeviceButton.getDevice(), aDeviceButton.getButton());
@@ -100,6 +113,11 @@ public class HarmonyRest {
 	            		status_code = HttpStatus.SC_NOT_FOUND;
 	            	}
 	            }
+	        }
+	        else
+	        {
+	        	status_code = HttpStatus.SC_NOT_FOUND;
+		    	aResponse = "{\"status\": \"null request\"}";
 	        }
 	        
 	        response.status(status_code);
