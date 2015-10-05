@@ -2,6 +2,7 @@ package com.bwssystems.restfulharmony.api;
 
 import static spark.Spark.get;
 import static spark.Spark.put;
+import static spark.Spark.options;
 
 import java.util.List;
 
@@ -62,6 +63,17 @@ public class HarmonyRest {
 	    	return activity;
 	    }, new JsonTransformer());
 
+	    // http://ip_address:port/harmony/start CORS request
+	    options(HARMONY_REST_CONTEXT + "/start", "application/json", (request, response) -> {
+	        response.status(HttpStatus.SC_OK);
+	        response.header("Access-Control-Allow-Origin", request.headers("Origin"));
+	        response.header("Access-Control-Allow-Methods", "GET, POST, PUT");
+	        response.header("Access-Control-Allow-Headers", request.headers("Access-Control-Request-Headers"));
+	        response.header("Content-Type", "text/html; charset=utf-8");
+        	if(noopCalls)
+        		log.info("Noop: setting options response and sending");
+	    	return "";
+	    });
 	    // http://ip_address:port/harmony/start the body is the id of the activity
 	    put(HARMONY_REST_CONTEXT + "/start", "application/json", (request, response) -> {
 	    	ActivityId anActivity;
@@ -89,10 +101,22 @@ public class HarmonyRest {
 		    	aResponse = "{\"status\": \"null request\"}";
 	        }
 	        
+	        response.header("Access-Control-Allow-Origin", request.headers("Origin"));
 	        response.status(status_code);
 	        return aResponse;
 	    });
 
+	    // http://ip_address:port/harmony/start CORS request
+	    options(HARMONY_REST_CONTEXT + "/press", "application/json", (request, response) -> {
+	        response.status(HttpStatus.SC_OK);
+	        response.header("Access-Control-Allow-Origin", request.headers("Origin"));
+	        response.header("Access-Control-Allow-Methods", "GET, POST, PUT");
+	        response.header("Access-Control-Allow-Headers", request.headers("Access-Control-Request-Headers"));
+	        response.header("Content-Type", "text/html; charset=utf-8");
+        	if(noopCalls)
+        		log.info("Noop: setting options response and sending");
+	    	return "";
+	    });
 	    // http://ip_address:port/harmony/press the body is the id of the activity
 	    put(HARMONY_REST_CONTEXT + "/press", "application/json", (request, response) -> {
 	    	DeviceButton aDeviceButton;
@@ -120,7 +144,8 @@ public class HarmonyRest {
 		    	aResponse = "{\"status\": \"null request\"}";
 	        }
 	        
-	        response.status(status_code);
+	        response.header("Access-Control-Allow-Origin", request.headers("Origin"));
+ 	        response.status(status_code);
 	        return aResponse;
 	    });
     }
