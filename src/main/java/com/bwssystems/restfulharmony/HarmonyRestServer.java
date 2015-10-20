@@ -22,26 +22,36 @@ public class HarmonyRestServer {
     private HarmonyClient harmonyClient;
     
     private HarmonyRest harmonyApi;
+    
+    private static Boolean devMode;
 
     public static void main(String[] args) throws Exception {
-        Injector injector = Guice.createInjector(new HarmonyClientModule());
+    	devMode = Boolean.parseBoolean(System.getProperty("dev.mode", "false"));
+    	Injector injector = null;
+    	if(!devMode)
+            injector = Guice.createInjector(new HarmonyClientModule());
         HarmonyRestServer mainObject = new HarmonyRestServer();
-        injector.injectMembers(mainObject);
+    	if(!devMode)
+    		injector.injectMembers(mainObject);
         System.exit(mainObject.execute(args));
     }
 
     public int execute(String[] args) throws Exception {
         Logger log = LoggerFactory.getLogger(HarmonyRestServer.class);
-        harmonyClient.addListener(new ActivityChangeListener() {
-            @Override
-            public void activityStarted(Activity activity) {
-                log.info(format("activity changed: [%d] %s", activity.getId(), activity.getLabel()));
-            }
-        });
-        harmonyClient.connect(args[0], args[1], args[2]);
+        if(devMode)
+        	harmonyClient = null;
+        else {
+	        harmonyClient.addListener(new ActivityChangeListener() {
+	            @Override
+	            public void activityStarted(Activity activity) {
+	                log.info(format("activity changed: [%d] %s", activity.getId(), activity.getLabel()));
+	            }
+	        });
+	        harmonyClient.connect(args[0], args[1], args[2]);
+        }
         port(Integer.valueOf(System.getProperty("server.port", "8080")));
         Boolean noopCalls = Boolean.parseBoolean(System.getProperty("noop.calls", "false"));
-        harmonyApi = new HarmonyRest(harmonyClient, noopCalls);
+        harmonyApi = new HarmonyRest(harmonyClient, noopCalls, devMode);
         harmonyApi.setupServer();
         log.info("Harmony v0.1.3 rest server running....");
         while(true)

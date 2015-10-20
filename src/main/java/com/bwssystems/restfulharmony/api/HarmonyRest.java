@@ -22,10 +22,12 @@ public class HarmonyRest {
     private static final String HARMONY_REST_CONTEXT = "/harmony";
     private HarmonyClient harmonyClient;
     private Boolean noopCalls;
+    private Boolean devMode;
 
-    public HarmonyRest(HarmonyClient theClient, Boolean noopCallsSetting) {
+    public HarmonyRest(HarmonyClient theClient, Boolean noopCallsSetting, Boolean devModeSetting) {
 		super();
 		noopCalls = noopCallsSetting;
+		devMode = devModeSetting;
 		harmonyClient = theClient;
 	}
 
