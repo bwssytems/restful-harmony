@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bwssystems.restfulharmony.api.DevModeResponse;
 import com.bwssystems.restfulharmony.api.HarmonyRest;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -22,6 +23,8 @@ public class HarmonyRestServer {
     private HarmonyClient harmonyClient;
     
     private HarmonyRest harmonyApi;
+    
+    private DevModeResponse devResponse;
     
     private static Boolean devMode;
 
@@ -39,8 +42,12 @@ public class HarmonyRestServer {
     public int execute(String[] args) throws Exception {
         Logger log = LoggerFactory.getLogger(HarmonyRestServer.class);
         if(devMode)
+        {
         	harmonyClient = null;
+        	devResponse = new DevModeResponse();
+        }
         else {
+        	devResponse = null;
 	        harmonyClient.addListener(new ActivityChangeListener() {
 	            @Override
 	            public void activityStarted(Activity activity) {
@@ -51,7 +58,7 @@ public class HarmonyRestServer {
         }
         port(Integer.valueOf(System.getProperty("server.port", "8080")));
         Boolean noopCalls = Boolean.parseBoolean(System.getProperty("noop.calls", "false"));
-        harmonyApi = new HarmonyRest(harmonyClient, noopCalls, devMode);
+        harmonyApi = new HarmonyRest(harmonyClient, noopCalls, devResponse);
         harmonyApi.setupServer();
         log.info("Harmony v0.1.3 rest server running....");
         while(true)

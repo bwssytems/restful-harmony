@@ -23,11 +23,18 @@ public class HarmonyRest {
     private HarmonyClient harmonyClient;
     private Boolean noopCalls;
     private Boolean devMode;
+    private DevModeResponse devResponse;
 
-    public HarmonyRest(HarmonyClient theClient, Boolean noopCallsSetting, Boolean devModeSetting) {
+    public HarmonyRest(HarmonyClient theClient, Boolean noopCallsSetting, DevModeResponse devResponseSetting) {
 		super();
 		noopCalls = noopCallsSetting;
-		devMode = devModeSetting;
+		devMode = Boolean.TRUE;
+		devResponse = null;
+		if(devResponseSetting == null)
+			devMode = Boolean.FALSE;
+		else
+			devResponse = devResponseSetting;
+		
 		harmonyClient = theClient;
 	}
 
@@ -37,7 +44,11 @@ public class HarmonyRest {
     	// http://ip_address:port/harmony/list/activities
 	    get(HARMONY_REST_CONTEXT + "/list/activities", "application/json", (request, response) -> {
 	        log.debug("Harmony api activities list requested from: " + request.ip());
-	        List<Activity> activities = harmonyClient.getConfig().getActivities();
+	        List<Activity> activities = null;
+	        if(devMode)
+	        	activities = devResponse.getActivities();
+	        else
+	        	activities = harmonyClient.getConfig().getActivities();
 	        response.status(HttpStatus.SC_OK);
 	    	return activities;
 	    }, new JsonTransformer());
@@ -45,7 +56,11 @@ public class HarmonyRest {
 	    // http://ip_address:port/harmony/list/devices
 	    get(HARMONY_REST_CONTEXT + "/list/devices", "application/json", (request, response) -> {
 	        log.debug("Harmony api device list requested from: " + request.ip());
-	        List<Device> devices = harmonyClient.getConfig().getDevices();
+	        List<Device> devices = null;
+	        if(devMode)
+	        	devices = devResponse.getDevices();
+	        else
+	        	devices = harmonyClient.getConfig().getDevices();
 	        response.status(HttpStatus.SC_OK);
 	    	return devices;
 	    }, new JsonTransformer());
@@ -53,14 +68,23 @@ public class HarmonyRest {
 	    // http://ip_address:port/harmony/config
 	    get(HARMONY_REST_CONTEXT + "/config", "application/json", (request, response) -> {
 	        log.debug("Harmony api config requested from: " + request.ip());
+	        String theResponse = null;
+	        if(devMode)
+	        	theResponse = devResponse.getConfig().toJson();
+	        else
+	        	theResponse = harmonyClient.getConfig().toJson();
 	        response.status(HttpStatus.SC_OK);
-	    	return harmonyClient.getConfig().toJson();
+	    	return theResponse;
 	    });
 
 	    // http://ip_address:port/harmony/show/activity
 	    get(HARMONY_REST_CONTEXT + "/show/activity", "application/json", (request, response) -> {
 	        log.debug("Harmony api current sctivity requested from: " + request.ip());
-	        Activity activity = harmonyClient.getCurrentActivity();
+	        Activity activity = null;
+	        if(devMode)
+	        	activity = devResponse.getCurrentActivity();
+	        else
+	        	activity = harmonyClient.getCurrentActivity();
 	        response.status(HttpStatus.SC_OK);
 	    	return activity;
 	    }, new JsonTransformer());
@@ -84,8 +108,17 @@ public class HarmonyRest {
 	        if(request.body() != null && !request.body().isEmpty()) {
 	        	anActivity = new Gson().fromJson(request.body(), ActivityId.class);
 	            try {
-	            	if(noopCalls)
+	            	if(noopCalls || devMode)
+	            	{
 	            		log.info("Noop: start activity call would be: " + anActivity.getActivityid());
+	            		if(devMode)
+	            		{
+	            			if(Integer.getInteger(anActivity.getActivityid()) == null)
+	            				devResponse.setCurrentActivity(devResponse.getConfig().getActivityByName(anActivity.getActivityid()));
+	            			else
+	            				devResponse.setCurrentActivity(devResponse.getConfig().getActivityById(Integer.getInteger(anActivity.getActivityid()).intValue()));
+	            		}
+	            	}
 	            	else
 	            		harmonyClient.startActivity(Integer.parseInt(anActivity.getActivityid()));
 	            } catch (IllegalArgumentException e) {
@@ -127,7 +160,7 @@ public class HarmonyRest {
 	        if(request.body() != null && !request.body().isEmpty()) {
 	        	aDeviceButton = new Gson().fromJson(request.body(), DeviceButton.class);
 	            try {
-	            	if(noopCalls)
+	            	if(noopCalls || devMode)
 	            		log.info("Noop: press call would be device: " + aDeviceButton.getDevice() + " for button: " + aDeviceButton.getButton());
 	            	else
 	            		harmonyClient.pressButton(Integer.parseInt(aDeviceButton.getDevice()), aDeviceButton.getButton());
