@@ -13,7 +13,7 @@ java -jar restful-harmony-0.X.Y.jar <harmony hub ip> <harmony user name> <harmon
 ```
 ## Available Arguments
 ### -Dserver.port=`<port>`
-Optional: The server defaults to running on port 8080. If you're already running a server (like openHAB) on 8080, -Dserver.port=`<port>` on the command line.
+Optional: The server defaults to running on port 8081. If you're already running a server (like openHAB) on 8081, -Dserver.port=`<port>` on the command line.
 ```
 java -jar -Dserver.port=8081 restful-harmony-0.X.Y.jar <harmony hub ip> <harmony user name> <harmony password>
 ```
@@ -24,39 +24,41 @@ Required: This is your username that you registered at MyHarmony.com.
 ### `<harmony password>`
 Required: This is your password that you registered at MyHarmony.com.
 ## Api usage
-This application exposes a restful api using the constructs for GET/PUT/POST. The following are the commands in the api that are available. The api address is: http://<ip address>:<port>/harmony and the context we will use below for examples is http://host:8080/harmony.
+This application exposes a restful api using the constructs for GET/PUT/POST. The following are the commands in the api that are available. The api address is: http://<ip address>:<port>/harmony and the context we will use below for examples is http://host:8081/harmony.
+
+The format of the json notation below is for easy reading. Actual json data is not separated by line returns in system usage.
 ### List activities
 There are no arguments necessary.
 ```
-GET http://host:8080/harmony/list/activities
+GET http://host:8081/harmony/list/activities
 {
 }
 ```
 ### List devices
 There are no arguments necessary.
 ```
-GET http://host:8080/harmony/list/devices
+GET http://host:8081/harmony/list/devices
 {
 }
 ```
 ### Show current activity
 There are no arguments necessary.
 ```
-GET http://host:8080/harmony/show/activity
+GET http://host:8081/harmony/show/activity
 {
 }
 ```
 ### Show full hub configuration
 There are no arguments necessary.
 ```
-GET http://host:8080/harmony/config
+GET http://host:8081/harmony/config
 {
 }
 ```
 ### Start an Activity
 This method requires passing an activity either as an activity numeric id or an activity name.
 ```
-PUT http://host:8080/harmony/start
+PUT http://host:8081/harmony/start
 {
 "activityid" : "Watch TV"
 }
@@ -64,7 +66,7 @@ PUT http://host:8080/harmony/start
 ### Press a button on a given device
 This method requires passing a device as a numeric id or a name and a button name.
 ```
-PUT http://host:8080/harmony/press
+PUT http://host:8081/harmony/press
 {
 "device" : "TV",
 "button" : "source"
@@ -74,4 +76,9 @@ PUT http://host:8080/harmony/press
 To turn on debugging for the rest server, use the following extra parm in the command line:
 ```
 java -jar -Dorg.slf4j.simpleLogger.defaultLogLevel=DEBUG restful-harmony-0.X.Y.jar <harmony hub ip> <harmony user name> <harmony password>
+```
+## Development Mode
+To turn on development mode so that it will not need an Harmony Hub for testing, use the following extra parm in the command line and the harmony ip and login info will not be needed:
+```
+java -jar -Ddev.mode restful-harmony-0.X.Y.jar
 ```

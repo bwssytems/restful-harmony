@@ -56,11 +56,16 @@ public class HarmonyRestServer {
 	        });
 	        harmonyClient.connect(args[0], args[1], args[2]);
         }
-        port(Integer.valueOf(System.getProperty("server.port", "8080")));
+        port(Integer.valueOf(System.getProperty("server.port", "8081")));
         Boolean noopCalls = Boolean.parseBoolean(System.getProperty("noop.calls", "false"));
         harmonyApi = new HarmonyRest(harmonyClient, noopCalls, devResponse);
         harmonyApi.setupServer();
-        log.info("Harmony v0.1.3 rest server running....");
+        String modeString = "";
+        if(devMode)
+        	modeString = " (development mode)";
+        if(noopCalls)
+        	modeString = " (no op calls to harmony)";
+        log.info("Harmony v0.1.4 rest server running" + modeString + "....");
         while(true)
         {
         	//no op
