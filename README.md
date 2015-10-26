@@ -80,5 +80,5 @@ java -jar -Dorg.slf4j.simpleLogger.defaultLogLevel=DEBUG restful-harmony-0.X.Y.j
 ## Development Mode
 To turn on development mode so that it will not need an Harmony Hub for testing, use the following extra parm in the command line and the harmony ip and login info will not be needed:
 ```
-java -jar -Ddev.mode restful-harmony-0.X.Y.jar
+java -jar -Ddev.mode=true restful-harmony-0.X.Y.jar
 ```
