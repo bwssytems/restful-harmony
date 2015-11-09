@@ -112,12 +112,6 @@
 										<include>**</include>
 									</includes>
 								</filter>
-								<filter>
-									<artifact>com.github.bwssytems:harmony-java-client</artifact>
-									<includes>
-										<include>**</include>
-									</includes>
-								</filter>
 							</filters>
 							<transformers>
 								<transformer
