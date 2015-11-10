@@ -26,11 +26,11 @@ Required: This is your password that you registered at MyHarmony.com.
 ## Api usage
 This application exposes a restful api using the constructs for GET/PUT/POST. The following are the commands in the api that are available. The api address is: http://<ip address>:<port>/harmony and the context we will use below for examples is http://host:8081/harmony.
 
-The REST examples are all formatted for easy reading, the actual usage should be like this:
+The REST body examples are all formatted for easy reading, the actual body usage should be like this:
 ```
 {"var1":"value1","var2":"value2","var3:"value3"}
 ```
-As it should be all in one big string and not separated by returns,tabs or spaces. FYI, GET items do not require a body element.
+The body should be all in one string and not separated by returns, tabs or spaces. FYI, GET items do not require a body element. If you would like to see example return of data for full hub configuration, which includes activities and devices, take a look at the resource file config.data.
 ### List activities
 There are no arguments necessary.
 ```
