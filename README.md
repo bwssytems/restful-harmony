@@ -35,29 +35,21 @@ The body should be all in one string and not separated by returns, tabs or space
 There are no arguments necessary.
 ```
 GET http://host:8081/harmony/list/activities
-{
-}
 ```
 ### List devices
 There are no arguments necessary.
 ```
 GET http://host:8081/harmony/list/devices
-{
-}
 ```
 ### Show current activity
 There are no arguments necessary.
 ```
 GET http://host:8081/harmony/show/activity
-{
-}
 ```
 ### Show full hub configuration
 There are no arguments necessary.
 ```
 GET http://host:8081/harmony/config
-{
-}
 ```
 ### Start an Activity
 This method requires passing an activity either as an activity numeric id or an activity name.
