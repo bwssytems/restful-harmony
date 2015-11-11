@@ -1,5 +1,5 @@
 # restful-harmony
-Tbis subsystem is an extension of the https://github.com/tuck182/harmony-java-client client and starts a rest server that implements the basic harmony hub calls. this uses the tuck182 client as a library with no changes.  
+This subsystem is an extension of the https://github.com/tuck182/harmony-java-client client and starts a rest server that implements the basic harmony hub calls. this uses the tuck182 client as a library with no changes.  
 ## Build
 To customize and build it yourself, build a new jar with maven:  
 ```
