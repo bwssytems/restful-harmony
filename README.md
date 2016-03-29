@@ -5,7 +5,7 @@ To customize and build it yourself, build a new jar with maven:
 ```
 mvn install
 ```
-Otherwise go to http://www.bwssystems.com/apps.html to download the latest jar file.  
+Otherwise, downloads are available at https://github.com/bwssytems/restful-harmony/releases.  
 ## Run
 Then locate the jar and start the server with:  
 ```
@@ -13,10 +13,12 @@ java -jar restful-harmony-0.X.Y.jar <harmony hub ip> <harmony user name> <harmon
 ```
 ## Available Arguments
 ### -Dserver.port=`<port>`
-Optional: The server defaults to running on port 8081. If you're already running a server (like openHAB) on 8081, -Dserver.port=`<port>` on the command line.
+Optional: The server defaults to running on port 8081. If you're already running a server (like openHAB) on 8081, use -Dserver.port=`<port>` on the command line.
 ```
 java -jar -Dserver.port=8081 restful-harmony-0.X.Y.jar <harmony hub ip> <harmony user name> <harmony password>
 ```
+### -Dbutton.sleep=`<milliseconds>`
+Optional: The server defaults to using 100 milliseconds between button presses. If this is not recognized very well by your device, use -Dbutton.sleep=`<milliseconds>` on the command line.
 ### `<harmony hub ip>`
 Required: This is the IP address of your harmony hub.
 ### `<harmony user name>`
@@ -138,6 +140,7 @@ This method requires passing a device as a numeric id or a name and a button nam
 PUT http://host:8081/harmony/press
 ```
 #### Body arguments
+The body arguments can be one pair of device and button or an array to simulate multiple presses in one call.
 Name |	Type |	Description | Required
 -----|-------|--------------|------------
 device | string | A name or id for the device to send the button press.
@@ -147,6 +150,20 @@ button | string | A name for the button that is pressed.
 "device" : "TV",
 "button" : "source"
 }
+
+OR
+
+[
+	{
+		"device":"TV","button":"1"
+	},
+	{
+		"device":"TV","button:"2"
+	},
+	{
+		"device":"TV","button:"3"
+	}
+]
 ```
 #### Response
 The return gives the status of the request to the Harmony Hub.

@@ -1,7 +1,7 @@
 package com.bwssystems.restfulharmony;
 
 import static java.lang.String.format;
-import static spark.SparkBase.port;
+import static spark.Spark.*;
 
 import javax.inject.Inject;
 
@@ -27,9 +27,19 @@ public class HarmonyRestServer {
     private DevModeResponse devResponse;
     
     private static Boolean devMode;
+    private static Boolean noopCalls;
+    private static Logger log;
 
     public static void main(String[] args) throws Exception {
+        log = LoggerFactory.getLogger(HarmonyRestServer.class);
     	devMode = Boolean.parseBoolean(System.getProperty("dev.mode", "false"));
+        noopCalls = Boolean.parseBoolean(System.getProperty("noop.calls", "false"));
+        String modeString = "";
+        if(devMode)
+        	modeString = " (development mode)";
+        if(noopCalls)
+        	modeString = " (no op calls to harmony)";
+        log.info("Harmony v0.1.5 rest server running" + modeString + "....");
     	Injector injector = null;
     	if(!devMode)
             injector = Guice.createInjector(new HarmonyClientModule());
@@ -40,7 +50,6 @@ public class HarmonyRestServer {
     }
 
     public int execute(String[] args) throws Exception {
-        Logger log = LoggerFactory.getLogger(HarmonyRestServer.class);
         if(devMode)
         {
         	harmonyClient = null;
@@ -57,15 +66,9 @@ public class HarmonyRestServer {
 	        harmonyClient.connect(args[0], args[1], args[2]);
         }
         port(Integer.valueOf(System.getProperty("server.port", "8081")));
-        Boolean noopCalls = Boolean.parseBoolean(System.getProperty("noop.calls", "false"));
-        harmonyApi = new HarmonyRest(harmonyClient, noopCalls, devResponse);
+        int sleepTime = Integer.parseInt(System.getProperty("button.sleep", "100"));
+        harmonyApi = new HarmonyRest(harmonyClient, noopCalls, sleepTime, devResponse);
         harmonyApi.setupServer();
-        String modeString = "";
-        if(devMode)
-        	modeString = " (development mode)";
-        if(noopCalls)
-        	modeString = " (no op calls to harmony)";
-        log.info("Harmony v0.1.4 rest server running" + modeString + "....");
         while(true)
         {
         	//no op
