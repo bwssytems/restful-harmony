@@ -15,7 +15,7 @@ java -jar restful-harmony-0.X.Y.jar <harmony hub ip>
 ### -Dserver.port=`<port>`
 Optional: The server defaults to running on port 8081. If you're already running a server (like openHAB) on 8081, use -Dserver.port=`<port>` on the command line.
 ```
-java -jar -Dserver.port=8081 restful-harmony-0.X.Y.jar <harmony hub ip> <harmony user name> <harmony password>
+java -jar -Dserver.port=8081 restful-harmony-0.X.Y.jar <harmony hub ip>
 ```
 ### -Dbutton.sleep=`<milliseconds>`
 Optional: The server defaults to using 100 milliseconds between button presses. If this is not recognized very well by your device, use -Dbutton.sleep=`<milliseconds>` on the command line.
