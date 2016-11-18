@@ -9,7 +9,7 @@ Otherwise, downloads are available at https://github.com/bwssytems/restful-harmo
 ## Run
 Then locate the jar and start the server with:  
 ```
-java -jar restful-harmony-0.X.Y.jar <harmony hub ip> <harmony user name> <harmony password>
+java -jar restful-harmony-0.X.Y.jar <harmony hub ip>
 ```
 ## Available Arguments
 ### -Dserver.port=`<port>`
