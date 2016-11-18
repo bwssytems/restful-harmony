@@ -21,10 +21,10 @@ java -jar -Dserver.port=8081 restful-harmony-0.X.Y.jar <harmony hub ip> <harmony
 Optional: The server defaults to using 100 milliseconds between button presses. If this is not recognized very well by your device, use -Dbutton.sleep=`<milliseconds>` on the command line.
 ### `<harmony hub ip>`
 Required: This is the IP address of your harmony hub.
-### `<harmony user name>`
-Required: This is your username that you registered at MyHarmony.com.
-### `<harmony password>`
-Required: This is your password that you registered at MyHarmony.com.
+### `<harmony user name>` deprecated
+
+### `<harmony password>` deprecated
+
 ## Api usage
 This application exposes a restful api using the constructs for GET/PUT/POST. The following are the commands in the api that are available. The api address is: http://<ip address>:<port>/harmony and the context we will use below for examples is http://host:8081/harmony.
 
@@ -143,8 +143,10 @@ PUT http://host:8081/harmony/press
 The body arguments can be one pair of device and button or an array to simulate multiple presses in one call.
 Name |	Type |	Description | Required
 -----|-------|--------------|------------
-device | string | A name or id for the device to send the button press.
-button | string | A name for the button that is pressed.
+device | string | A name or id for the device to send the button press. | Yes
+button | string | A name for the button that is pressed. | Yes
+delay | number | A number of milliseconds to delay to the next call. | Optional
+count | number | A number of times to execute this button push. | Optional
 ```
 {
 "device" : "TV",
@@ -158,7 +160,7 @@ OR
 		"device":"TV","button":"1"
 	},
 	{
-		"device":"TV","button:"2"
+		"device":"TV","button:"2","delay":150,"count":5
 	},
 	{
 		"device":"TV","button:"3"

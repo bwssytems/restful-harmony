@@ -158,28 +158,40 @@ public class HarmonyRest {
 	    	DeviceButton aDeviceButtons[];
 	    	String theArguments = request.body();
 	    	String aResponse = "{\"status\": \"OK\"}";
+        	Integer theDelay = sleepTime;
 	    	int status_code = HttpStatus.SC_OK;
 	        if(request.body() != null && !request.body().isEmpty()) {
 	        	if(theArguments.substring(0, 1).equalsIgnoreCase("{")) {
 	        		theArguments = "[" + theArguments +"]";
 	        	}
 	        	aDeviceButtons = new Gson().fromJson(theArguments, DeviceButton[].class);
+	        	Integer setCount = 1;
         		for(int i = 0; i < aDeviceButtons.length; i++) {
-        			if( i > 0)
-        				Thread.sleep(sleepTime);
-		            try {
-		            	if(noopCalls || devMode)
-		            		log.info("Noop: press call would be device: " + aDeviceButtons[i].getDevice() + " for button: " + aDeviceButtons[i].getButton());
-		            	else
-		            		harmonyClient.pressButton(Integer.parseInt(aDeviceButtons[i].getDevice()), aDeviceButtons[i].getButton());
-		            } catch (IllegalArgumentException e) {
-		            	try {
-		            		harmonyClient.pressButton(aDeviceButtons[i].getDevice(), aDeviceButtons[i].getButton());
-		            	} catch (IllegalArgumentException ei) {
-		            		aResponse = "{\"status\": \"" + ei.getMessage() + "\"}";
-		            		status_code = HttpStatus.SC_NOT_FOUND;
-		            	}
-		            }
+	        		if(aDeviceButtons[i].getCount() != null && aDeviceButtons[i].getCount() > 0)
+	        			setCount = aDeviceButtons[i].getCount();
+	        		else
+	        			setCount = 1;
+	        		for(int x = 0; x < setCount; x++) {
+	        			if( x > 0 || i > 0)
+	        				Thread.sleep(theDelay);
+	        			if(aDeviceButtons[i].getDelay() != null && aDeviceButtons[i].getDelay() > 0)
+	        				theDelay = aDeviceButtons[i].getDelay();
+	        			else
+	        				theDelay = sleepTime;
+			            try {
+			            	if(noopCalls || devMode)
+			            		log.info("Noop: press call would be device: " + aDeviceButtons[i].getDevice() + " for button: " + aDeviceButtons[i].getButton());
+			            	else
+			            		harmonyClient.pressButton(Integer.parseInt(aDeviceButtons[i].getDevice()), aDeviceButtons[i].getButton());
+			            } catch (IllegalArgumentException e) {
+			            	try {
+			            		harmonyClient.pressButton(aDeviceButtons[i].getDevice(), aDeviceButtons[i].getButton());
+			            	} catch (IllegalArgumentException ei) {
+			            		aResponse = "{\"status\": \"" + ei.getMessage() + "\"}";
+			            		status_code = HttpStatus.SC_NOT_FOUND;
+			            	}
+			            }
+	        		}
         		}
 	        }
 	        else

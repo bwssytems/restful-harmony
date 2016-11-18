@@ -32,6 +32,9 @@ public class HarmonyRestServer {
 
     public static void main(String[] args) throws Exception {
         log = LoggerFactory.getLogger(HarmonyRestServer.class);
+        Version theVersion;
+        
+        theVersion = new Version();
     	devMode = Boolean.parseBoolean(System.getProperty("dev.mode", "false"));
         noopCalls = Boolean.parseBoolean(System.getProperty("noop.calls", "false"));
         String modeString = "";
@@ -39,7 +42,7 @@ public class HarmonyRestServer {
         	modeString = " (development mode)";
         if(noopCalls)
         	modeString = " (no op calls to harmony)";
-        log.info("Harmony v0.1.5 rest server running" + modeString + "....");
+        log.info("Harmony v" + theVersion.getVersion() + " rest server running" + modeString + "....");
     	Injector injector = null;
     	if(!devMode)
             injector = Guice.createInjector(new HarmonyClientModule());
@@ -63,7 +66,7 @@ public class HarmonyRestServer {
 	                log.info(format("activity changed: [%d] %s", activity.getId(), activity.getLabel()));
 	            }
 	        });
-	        harmonyClient.connect(args[0], args[1], args[2]);
+	        harmonyClient.connect(args[0]);
         }
         port(Integer.valueOf(System.getProperty("server.port", "8081")));
         int sleepTime = Integer.parseInt(System.getProperty("button.sleep", "100"));
