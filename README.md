@@ -179,7 +179,7 @@ status | string | The type of status of the action. i.e. OK or an error message
 ## Debugging
 To turn on debugging for the rest server, use the following extra parm in the command line:
 ```
-java -jar -Dorg.slf4j.simpleLogger.defaultLogLevel=DEBUG restful-harmony-0.X.Y.jar <harmony hub ip> <harmony user name> <harmony password>
+java -jar -Dorg.slf4j.simpleLogger.defaultLogLevel=DEBUG restful-harmony-0.X.Y.jar <harmony hub ip>
 ```
 ## Development Mode
 To turn on development mode so that it will not need an Harmony Hub for testing, use the following extra parm in the command line and the harmony ip and login info will not be needed:
