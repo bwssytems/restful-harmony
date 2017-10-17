@@ -25,6 +25,15 @@ Required: This is the IP address of your harmony hub.
 
 ### `<harmony password>` deprecated
 
+## Run in Docker
+To run in docker build the Dockerfile with the following command:
+
+`docker build --tag restful-harmony .`
+
+Run it with this command, setting the IP address of your Harmony Hub accordingly:
+
+`docker run -d -P -e "HARMONY_IP=192.168.178.25" --name restful-harmony restful-harmony`
+
 ## Api usage
 This application exposes a restful api using the constructs for GET/PUT/POST. The following are the commands in the api that are available. The api address is: http://<ip address>:<port>/harmony and the context we will use below for examples is http://host:8081/harmony.
 
