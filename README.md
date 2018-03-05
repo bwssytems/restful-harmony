@@ -169,10 +169,10 @@ OR
 		"device":"TV","button":"1"
 	},
 	{
-		"device":"TV","button:"2","delay":150,"count":5
+		"device":"TV","button":"2","delay":150,"count":5
 	},
 	{
-		"device":"TV","button:"3"
+		"device":"TV","button":"3"
 	}
 ]
 ```
