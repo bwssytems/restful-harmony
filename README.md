@@ -150,6 +150,7 @@ PUT http://host:8081/harmony/press
 ```
 #### Body arguments
 The body arguments can be one pair of device and button or an array to simulate multiple presses in one call.
+
 Name |	Type |	Description | Required
 -----|-------|--------------|------------
 device | string | A name or id for the device to send the button press. | Yes
