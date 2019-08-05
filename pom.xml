@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.bwssystems</groupId>
 	<artifactId>restful-harmony</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<properties>
 		<java.version>1.8</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -12,106 +13,137 @@
 	<description>This server application will expose a REST API to be able to execute Harmony Hub commands. This will be useful for integration with Home Automation systems that do not support the Harmony Hub directly.</description>
 	<repositories>
 		<repository>
-	    	<id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
-		    <groupId>com.github.bwssytems</groupId>
-		    <artifactId>harmony-java-client</artifactId>
-		    <version>1.1.1</version>
-		    <exclusions>
-		       <exclusion> 
-		          <groupId>org.slf4j</groupId>
-		          <artifactId>slf4j-simple</artifactId>
-		       </exclusion>
-		       <exclusion> 
-		            <groupId>org.slf4j</groupId>
-		            <artifactId>log4j-over-slf4j</artifactId>
-		       </exclusion>
-		    </exclusions> 
+			<groupId>com.github.bwssytems</groupId>
+			<artifactId>harmony-java-client</artifactId>
+			<version>1.2.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-simple</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>log4j-over-slf4j</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.sparkjava</groupId>
 			<artifactId>spark-core</artifactId>
-			<version>2.3</version>
-		    <exclusions>
-		    	<exclusion>
-		    		<artifactId>slf4j-simple</artifactId>
-		    		<groupId>org.slf4j</groupId>
-		    	</exclusion>
-		    </exclusions>
+			<version>2.7.2</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-simple</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.5.1</version>
 		</dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>4.4.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.5</version>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.24</version>
+		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.5</version>
+			<version>1.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.2.4</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.6.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.6.0</version>
+			<version>2.6.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
-			<version>4.0-beta4</version>
+			<version>4.1.0</version>
 		</dependency>
 		<dependency>
-		  <groupId>org.igniterealtime.smack</groupId>
-		  <artifactId>smack-core</artifactId>
-		  <version>4.0.7</version>
+			<groupId>org.igniterealtime.smack</groupId>
+			<artifactId>smack-core</artifactId>
+			<version>4.2.0</version>
 		</dependency>
 	</dependencies>
 
 	<build>
-	    <resources>
-	      <resource>
-	        <directory>src/main/resources</directory>
-	        <includes>
-	          <include>version.properties</include>
-	        </includes>
-	        <filtering>true</filtering>
-	      </resource>
-	      <resource>
-	        <directory>src/main/resources</directory>
-	        <excludes>
-	          <exclude>version.properties</exclude>
-	        </excludes>
-	        <filtering>false</filtering>
-	      </resource>
-	    </resources>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>version.properties</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>version.properties</exclude>
+				</excludes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.0.0-M2</version>
+				<executions>
+					<execution>
+						<id>enforce-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<!-- Change this to Version 3.3 for Java 1.8 and Raspberry PI compilation -->
+									<version>3.6</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<!-- Comment this release line out for Java 1.8 and Raspberry PI compilation -->
+					<release>11</release>
+					<!-- Uncomment the next two lines for Java 1.8 and Raspberry PI compilation -->
+					<!-- <source>1.8</source> -->
+					<!-- <target>1.8</target> -->
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M3</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.3</version>
+				<version>3.2.1</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -167,8 +199,7 @@
 								</filter>
 							</filters>
 							<transformers>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>com.bwssystems.restfulharmony.HarmonyRestServer</mainClass>
 								</transformer>
 							</transformers>

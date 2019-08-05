@@ -1,0 +1,26 @@
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+*.iml
+data
+.project
+.idea
+/target/
+/.settings/
+/start.bat
+/.classpath
+
+sftp-config\.json
+/bin/
+.vscode/launch.json
+.vscode/launch.test.json
+.vscode/settings.json
+.vscode/tasks.json
+# dependencies
+/node_modules
+
+package-lock.json
